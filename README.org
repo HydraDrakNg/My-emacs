@@ -1,0 +1,68 @@
+#+TITLE: Ahuízotl Emacs
+
+* Configuraciones
+** Ui
+#+begin_src emacs-lisp
+  (setq display-time-format "Date: %H:%M  %Y-%m-%d")
+  (setq display-time-default-load-average nil)
+  (display-time-mode)
+
+  (use-package no-littering)
+
+  (setq ahuizotl-theme 'doom-dracula)
+  (setq efs/frame-transparency '(90 . 90))
+  (setq ahuizotl-title "Ahuizotl Emacs")
+
+  ;; no-littering doesn't set this by default so we must place
+  ;; auto save files in the same path as it uses for sessions
+  (setq auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message nil)
+
+  (scroll-bar-mode -1)        ; Disable visible scrollbar
+  (tool-bar-mode -1)          ; Disable the toolbar
+  (tooltip-mode -1)           ; Disable tooltips
+  (set-fringe-mode 10)        ; Give some breathing room
+
+  (menu-bar-mode -1)            ; Disable the menu bar
+
+  ;; Set up the visible bell
+
+  (set-default 'cursor-type 'bar)
+
+  (setq visible-bell t)
+
+  (column-number-mode)
+  (global-display-line-numbers-mode t)
+  (setq display-line-numbers-type 'relative)
+
+  ;; Set frame transparency
+  (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
+  (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
+  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+  ;; Backup file Title and parentesis complete
+  (setq make-backup-files nil)
+  (electric-pair-mode 1)
+  (setq frame-title-format ahuizotl-title)
+  (blink-cursor-mode 0)
+  (show-paren-mode 1)
+
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  vterm-mode-hook
+                  treemacs-mode-hook
+                  dired-mode-hook
+                  eshell-mode-hook
+                  emms-playlist-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+#+end_src
+** Ivy
+#+begin_src emacs-lisp
+
+#+end_src
